@@ -38,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install --prefer-source --no-progress --no-suggest --no-interaction
+        run: composer install --prefer-source --no-progress --no-interaction
 
       - name: Run test suite
         run: composer run-script test
