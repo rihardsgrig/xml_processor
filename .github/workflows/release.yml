@@ -1,0 +1,56 @@
+name: XML Processor Release
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: intl, zip, zlib
+          coverage: none
+          ini-values: memory_limit=1G, phar.readonly=0
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo ::set-output name=dir::$(composer config cache-files-dir)
+
+      - name: Setup Composer Cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --no-dev --prefer-dist --no-progress --no-interaction
+
+      - name: Install Phar tools and build deployment artefact.
+        run: |
+          composer phar:install-tools
+          composer phar:build
+
+      - name: Get Tag Name
+        id: get-version
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: ${{ steps.get-version.outputs.version }}
+          tag: ${{ steps.get-version.outputs.version }}
+          allowUpdates: true
+          artifacts: xml-processor.phar
+          artifactContentType: application/x-php
