@@ -1,0 +1,21 @@
+{
+    "chmod": "0755",
+    "directories": [
+        "src"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": ["Tests"],
+            "in": ["vendor", "bin"]
+        }
+    ],
+    "main": "bin/xml-processor",
+    "output": "xml-processor.phar",
+    "git": "git",
+    "compression": "GZ",
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Json",
+        "KevinGH\\Box\\Compactor\\Php"
+    ]
+}
