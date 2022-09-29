@@ -4,4 +4,3 @@
 .DS_Store
 .phpunit.result.cache
 tools/
-composer.lock
