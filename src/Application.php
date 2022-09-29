@@ -25,7 +25,7 @@ final class Application
 
         $this->app = new SymfonyApplication(
             self::APP_NAME,
-            '@git@',
+            '@package_version@',
         );
     }
 

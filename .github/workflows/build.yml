@@ -3,7 +3,6 @@ name: XML Processor Test
 on:
   push:
     branches: [ main ]
-
   pull_request:
     branches: [ main ]
 
@@ -28,8 +27,18 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php-versions }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php-versions }}-
+
       - name: Install dependencies
-        run: composer install --no-progress --no-interaction
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install --prefer-source --no-progress --no-suggest --no-interaction
 
       - name: Run test suite
         run: composer run-script test
@@ -38,11 +47,11 @@ jobs:
         run: |
           composer phar:install-tools
           rm -rf vendor/*
-          composer install --prefer-dist --no-dev --no-interaction
+          composer install --prefer-dist --no-dev --no-interaction --no-progress
           composer phar:build
 
       - name: Run the phar
-        run: php xml-processor.phar
+        run: php xml-processor.phar  --version
 
       - name: Upload artefact
         uses: actions/upload-artifact@v2

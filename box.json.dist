@@ -1,5 +1,4 @@
 {
-    "chmod": "0755",
     "directories": [
         "src"
     ],
@@ -12,8 +11,8 @@
     ],
     "main": "bin/xml-processor",
     "output": "xml-processor.phar",
-    "git": "git",
     "compression": "GZ",
+    "git-version": "package_version",
     "compactors": [
         "KevinGH\\Box\\Compactor\\Json",
         "KevinGH\\Box\\Compactor\\Php"
