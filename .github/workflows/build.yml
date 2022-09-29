@@ -37,7 +37,7 @@ jobs:
             ${{ runner.os }}-php-${{ matrix.php-versions }}-
 
       - name: Install dependencies
-        run: composer install --prefer-source --no-progress --no-interaction
+        run: composer install --no-interaction --no-progress --prefer-dist
 
       - name: Run test suite
         run: composer run-script test
