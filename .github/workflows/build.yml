@@ -37,7 +37,6 @@ jobs:
             ${{ runner.os }}-php-${{ matrix.php-versions }}-
 
       - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-source --no-progress --no-interaction
 
       - name: Run test suite
@@ -54,7 +53,7 @@ jobs:
         run: php xml-processor.phar  --version
 
       - name: Upload artefact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }}-php-${{ matrix.php-versions }}-xml-processor.phar
           path: xml-processor.phar
