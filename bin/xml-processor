@@ -6,5 +6,6 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 use Xml\Processor\Application;
+use Xml\Processor\ConfigBuilder;
 
-return (new Application())->run();
+return (new Application(ConfigBuilder::build()))->run();

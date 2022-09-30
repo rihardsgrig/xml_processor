@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$config of method Google\\\\Client\\:\\:setAuthConfig\\(\\) expects array\\|string, mixed given\\.$#"
+			count: 1
+			path: src/Application.php
+
+		-
+			message: "#^Parameter \\#1 \\$stream of class Monolog\\\\Handler\\\\StreamHandler constructor expects resource\\|string, mixed given\\.$#"
+			count: 1
+			path: src/Application.php

@@ -15,6 +15,9 @@
     "string",
     "true",
     "void",
-    "PHPUnit\\Framework\\TestCase"
+    "PHPUnit\\Framework\\TestCase",
+    "Google_Service_Sheets",
+    "Google_Service_Sheets_ClearValuesRequest",
+    "Google_Service_Sheets_ValueRange"
   ]
 }
