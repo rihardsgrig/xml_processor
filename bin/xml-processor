@@ -5,6 +5,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Xml\Processor\Application;
@@ -14,6 +16,18 @@ $argv = $_SERVER['argv'];
 $input = new ArgvInput($argv);
 $output = new ConsoleOutput();
 
-$statusCode = (new Application(ConfigBuilder::build()))->run($input, $output);
+$appName = 'XML Processor';
+$config = ConfigBuilder::build(dirname(__DIR__));
+
+$logger = new Logger($appName);
+$logger->pushHandler(
+    new StreamHandler($config->get('xml_processor.log_location'))
+);
+
+$statusCode = (new Application(
+    $appName,
+    $config,
+    $logger
+))->run($input, $output);
 
 exit($statusCode);

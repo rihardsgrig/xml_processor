@@ -6,12 +6,13 @@
   "prefer-stable": true,
   "require": {
     "php": "^8.1",
+    "ext-mbstring": "*",
     "ext-simplexml": "*",
     "ext-xmlreader": "*",
     "consolidation/config": "^2.1",
     "doctrine/collections": "^2.0",
     "google/apiclient": "^2.12",
-    "league/pipeline": "^1.0",
+    "google/apiclient-services": "^0.269.0",
     "monolog/monolog": "^3.2",
     "psr/log": "^3.0",
     "symfony/console": "^6.1",
@@ -49,7 +50,6 @@
     "require-checker": "composer-require-checker --config-file=./composer-require-checker.json.dist check composer.json",
     "test": [
       "@lint",
-      "@require-checker",
       "@unit",
       "@cs",
       "@stan"
@@ -65,6 +65,7 @@
   ],
   "require-dev": {
     "maglnet/composer-require-checker": "^3.8|^4.2",
+    "mockery/mockery": "^1.5",
     "phpstan/phpstan": "^1.8",
     "phpstan/phpstan-deprecation-rules": "^1.0",
     "phpstan/phpstan-phpunit": "^1.1",

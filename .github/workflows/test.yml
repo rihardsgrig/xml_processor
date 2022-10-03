@@ -53,7 +53,12 @@ jobs:
           composer phar:build
 
       - name: Run the phar
-        run: php xml-processor.phar  --version
+        run: |
+          export XML_PROCESSOR_LOG_LOCATION="./app.log"
+          export XML_PROCESSOR_API_CREDENTIALS="tests/File/creds.json"
+          php xml-processor.phar  --version
+          unset XML_PROCESSOR_LOG_LOCATION
+          unset XML_PROCESSOR_API_CREDENTIALS
 
       - name: Upload artefact
         uses: actions/upload-artifact@v3

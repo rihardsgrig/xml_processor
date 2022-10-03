@@ -6,6 +6,7 @@ namespace Xml\Processor\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Xml\Processor\Exception\FailedToProcessFileException;
+use Xml\Processor\Helper\ColumnNameCalculator;
 
 class RangeRequest
 {
@@ -66,19 +67,7 @@ class RangeRequest
         return sprintf(
             '%s:%s',
             'A1',
-            $this->getColumnNameFromNumber(count($this->header)) . (count($this->items) + 1)
+            ColumnNameCalculator::getColumnNameFromNumber(count($this->header)) . (count($this->items) + 1)
         );
-    }
-
-    private function getColumnNameFromNumber(int $num): string
-    {
-        $numeric = ($num - 1) % 26;
-        $letter = chr(65 + $numeric); //65 === A
-        $num2 = (int)(($num - 1) / 26);
-        if ($num2 > 0) {
-            return $this->getColumnNameFromNumber($num2) . $letter;
-        } else {
-            return $letter;
-        }
     }
 }

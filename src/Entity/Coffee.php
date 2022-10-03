@@ -59,6 +59,11 @@ class Coffee
         return $obj;
     }
 
+    public function id(): string
+    {
+        return $this->id;
+    }
+
     /**
      * @return array<string, string>
      */
@@ -88,23 +93,23 @@ class Coffee
 
     private static function validate(SimpleXMLElement $xml): void
     {
-        Assert::propertyExists($xml, 'entity_id', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'CategoryName', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'sku', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'name', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'description', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'shortdesc', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'price', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'link', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'image', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'Brand', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'Rating', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'CaffeineType', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'Count', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'Flavored', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'Seasonal', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'Instock', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'Facebook', 'XML item is missing a node: %s');
-        Assert::propertyExists($xml, 'IsKCup', 'XML item is missing a node: %s');
+        Assert::propertyExists($xml, 'entity_id', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'CategoryName', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'sku', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'name', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'description', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'shortdesc', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'price', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'link', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'image', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'Brand', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'Rating', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'CaffeineType', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'Count', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'Flavored', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'Seasonal', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'Instock', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'Facebook', 'XML item is missing a node: %s.');
+        Assert::propertyExists($xml, 'IsKCup', 'XML item is missing a node: %s.');
     }
 }

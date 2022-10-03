@@ -14,7 +14,8 @@ class DataExtractor
 {
     public function extract(string $location): FileData
     {
-        $xml = XMLReader::open($location);
+        $xml = @XMLReader::open($location);
+
         if (false === $xml) {
             throw FailedToProcessFileException::unprocessableLocation($location);
         }

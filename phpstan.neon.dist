@@ -7,5 +7,4 @@ includes:
 parameters:
     level: max
     paths:
-        - tests
         - src

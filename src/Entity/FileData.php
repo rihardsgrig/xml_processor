@@ -20,7 +20,14 @@ class FileData
 
     public function addItem(Coffee $coffee): void
     {
-        if ($this->collection->contains($coffee)) {
+        $id = $coffee->id();
+        $item = $this->collection->findFirst(
+            function (int $key, Coffee $item) use ($id) {
+                return $item->id() === $id;
+            }
+        );
+
+        if (null !== $item) {
             return;
         }
 
