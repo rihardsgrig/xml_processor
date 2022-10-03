@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Xml\\\\Processor\\\\Client\\\\GoogleClient\\:\\:make\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Client/GoogleClient.php
