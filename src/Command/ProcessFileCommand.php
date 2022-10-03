@@ -46,30 +46,36 @@ class ProcessFileCommand extends Command
                 'spreadsheet-id',
                 InputArgument::REQUIRED,
                 'Id of the spreadsheet where to write.',
+            )
+            ->addArgument(
+                'sheet-name',
+                InputArgument::REQUIRED,
+                'Name of the spreadsheet sheet.',
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /**
+         * @var string $file
+         */
         $file = $input->getArgument('file-location');
+        /**
+         * @var string $spreadsheetId
+         */
         $spreadsheetId = $input->getArgument('spreadsheet-id');
-        if (!is_string($file) || !is_string($spreadsheetId)) {
-            $this->logger->error('Input parameter value is not a string.');
-            return Command::FAILURE;
-        }
+        /**
+         * @var string $sheetName
+         */
+        $sheetName = $input->getArgument('sheet-name');
 
         try {
             $fileData = $this->dataExtractor->extract($file);
             $output->write('Data extracted from XML file.', true);
 
-            $this->spreadsheetWriter->clear(
-                $spreadsheetId,
-                RangeRequest::create($fileData->items())
-            );
-            $output->write(sprintf('Content removed from spreadsheet "%s".', $spreadsheetId), true);
-
             $this->spreadsheetWriter->write(
                 $spreadsheetId,
+                $sheetName,
                 RangeRequest::create($fileData->items())
             );
             $output->write(sprintf('Data written to spreadsheet "%s".', $spreadsheetId), true);

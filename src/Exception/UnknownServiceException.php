@@ -7,7 +7,7 @@ namespace Xml\Processor\Exception;
 use RuntimeException;
 use Throwable;
 
-class FailedToWriteFileException extends RuntimeException
+class UnknownServiceException extends RuntimeException
 {
     private const EXCEPTION_CODE = 0;
 
@@ -16,8 +16,8 @@ class FailedToWriteFileException extends RuntimeException
         parent::__construct($message, self::EXCEPTION_CODE, $previous);
     }
 
-    public static function unableToWriteToSheet(string $fileId, ?Throwable $previous = null): self
+    public static function fromServiceName(string $service, ?Throwable $previous = null): self
     {
-        return new self(sprintf('Failed to write data to spreadsheet with id: "%s".', $fileId), $previous);
+        return new self(sprintf('Unknown Goole service: "%s".', $service), $previous);
     }
 }
