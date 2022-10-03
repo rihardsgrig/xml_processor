@@ -5,7 +5,15 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Xml\Processor\Application;
 use Xml\Processor\ConfigBuilder;
 
-return (new Application(ConfigBuilder::build()))->run();
+$argv = $_SERVER['argv'];
+$input = new ArgvInput($argv);
+$output = new ConsoleOutput();
+
+$statusCode = (new Application(ConfigBuilder::build()))->run($input, $output);
+
+exit($statusCode);
