@@ -71,14 +71,14 @@ class ProcessFileCommand extends Command
 
         try {
             $fileData = $this->dataExtractor->extract($file);
-            $output->write('Data extracted from XML file.', true);
+            $this->logger->info('Data extracted from XML file.');
 
             $this->spreadsheetWriter->write(
                 $spreadsheetId,
                 $sheetName,
                 RangeRequest::create($fileData->items())
             );
-            $output->write(sprintf('Data written to spreadsheet "%s".', $spreadsheetId), true);
+            $this->logger->info(sprintf('Data written to spreadsheet "%s".', $spreadsheetId), true);
         } catch (FailedToProcessFileException | FailedToWriteFileException $e) {
             $this->logger->error($e->getMessage());
             return Command::FAILURE;
