@@ -37,7 +37,10 @@ class ProcessFileCommandTest extends TestCase
         $data = new FileData();
         $data->addItem($item);
 
-        $logger = Mockery::mock(LoggerInterface::class);
+        $logger = Mockery::mock(LoggerInterface::class, function (MockInterface $mock) {
+            $mock->shouldReceive('info')
+                ->twice();
+        });
 
         $dataExtractor = Mockery::mock(DataExtractor::class, function (MockInterface $mock) use ($data): void {
             $mock->shouldReceive('extract')
@@ -155,6 +158,9 @@ class ProcessFileCommandTest extends TestCase
     public function testHandlesFileWriteException(): void
     {
         $logger = Mockery::mock(LoggerInterface::class, function (MockInterface $mock): void {
+            $mock->shouldReceive('info')
+                ->once()
+                ->with('Data extracted from XML file.');
             $mock->shouldReceive('error')
                 ->once()
                 ->with('Failed to write data to spreadsheet with id: "some_id".');
