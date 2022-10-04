@@ -78,7 +78,7 @@ class ProcessFileCommand extends Command
                 $sheetName,
                 RangeRequest::create($fileData->items())
             );
-            $this->logger->info(sprintf('Data written to spreadsheet "%s".', $spreadsheetId), true);
+            $this->logger->info(sprintf('Data written to spreadsheet "%s".', $spreadsheetId));
         } catch (FailedToProcessFileException | FailedToWriteFileException $e) {
             $this->logger->error($e->getMessage());
             return Command::FAILURE;
