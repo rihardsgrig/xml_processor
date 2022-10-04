@@ -6,9 +6,12 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 use Monolog\Logger;
+use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Xml\Processor\Application;
 use Xml\Processor\ConfigBuilder;
 
@@ -21,7 +24,15 @@ $config = ConfigBuilder::build(dirname(__DIR__));
 
 $logger = new Logger($appName);
 $logger->pushHandler(
-    new StreamHandler($config->get('xml_processor.log_location'))
+    new StreamHandler($config->get('xml_processor.log_location'), Level::Error)
+);
+
+$logger->pushHandler(
+    new ConsoleHandler(
+        $output,
+        true,
+        [OutputInterface::VERBOSITY_NORMAL => Level::Info],
+    ),
 );
 
 $statusCode = (new Application(

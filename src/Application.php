@@ -6,8 +6,6 @@ namespace Xml\Processor;
 
 use Consolidation\Config\Config;
 use Google\Service\Sheets as GoogleSheets;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Command\Command;
@@ -17,6 +15,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xml\Processor\Client\GoogleClient;
 use Xml\Processor\Client\Sheets;
+use Xml\Processor\Command\AddSheetCommand;
+use Xml\Processor\Command\ListSheetsCommand;
 use Xml\Processor\Command\ProcessFileCommand;
 use Xml\Processor\Service\DataExtractor;
 use Xml\Processor\Service\GoogleSpreadsheetWriter;
@@ -42,16 +42,18 @@ final class Application
          */
         $creds = $config->get('xml_processor.google_api_creds');
 
+        $sheets = new Sheets(
+            new GoogleClient(
+                [
+                    'application_name' => $appName,
+                    'google_api_creds' => $creds,
+                    'scopes' => [GoogleSheets::SPREADSHEETS]
+                ]
+            )
+        );
+
         $spreadsheetWriter = new GoogleSpreadsheetWriter(
-            new Sheets(
-                new GoogleClient(
-                    [
-                        'application_name' => $appName,
-                        'google_api_creds' => $creds,
-                        'scopes' => [GoogleSheets::SPREADSHEETS]
-                    ]
-                )
-            ),
+            $sheets
         );
 
         $this->app->getDefinition()->addOptions([
@@ -70,6 +72,20 @@ final class Application
                 $spreadsheetWriter
             ),
         );
+
+        $this->app->add(
+            new ListSheetsCommand(
+                $logger,
+                $sheets
+            ),
+        );
+
+        $this->app->add(
+            new AddSheetCommand(
+                $logger,
+                $sheets
+            ),
+        );
     }
 
     public function run(InputInterface $input, OutputInterface $output): int
@@ -78,7 +94,7 @@ final class Application
         if (!$input->hasParameterOption('--no-lock') && !$this->lock('xml-processor')) {
             $output->writeln('The command is already running in another process.');
 
-            return Command::FAILURE;
+            return Command::SUCCESS;
         }
 
         $statusCode = $this->app->run($input, $output);
