@@ -20,7 +20,7 @@ class ColumnNameCalculatorTest extends TestCase
         self::assertSame($letter, ColumnNameCalculator::getColumnNameFromNumber($number));
     }
 
-    private function values(): array
+    public static function values(): array
     {
         return [
             [1, 'A'],
