@@ -38,7 +38,7 @@ Choose the following method to finish setting up your installation.
 ### Manual installation/setup
 Once you have downloaded the application using one of the above steps, follow the below steps for a manual installation.
 1. Create `config.yml` file under `$HOME/.xml-processor/` directory.
-2. Set contents of the `config.yml` file to match the structure of the example bellow
+2. Set contents of the `config.yml` file to match the structure of the example below
 ```
 xml_processor:
   log_location: 'PATH/TO/LOG/FILE/app.log'
