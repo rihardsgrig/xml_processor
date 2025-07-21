@@ -56,7 +56,7 @@ class GoogleSpreadsheetWriterTest extends TestCase
         $writer = new GoogleSpreadsheetWriter($sheet);
 
         self::expectException(FailedToWriteFileException::class);
-        self::expectExceptionMessage('Failed to write data to spreadsheet with id: "spreadsheet_id');
+        self::expectExceptionMessage('Failed to write data to spreadsheet with id: "spreadsheet_id".');
         $writer->write('spreadsheet_id', 'sheet_name', $request);
     }
 
