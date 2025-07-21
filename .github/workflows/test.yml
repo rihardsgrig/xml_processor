@@ -61,7 +61,7 @@ jobs:
           unset XML_PROCESSOR_API_CREDENTIALS
 
       - name: Upload artefact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}-php-${{ matrix.php-versions }}-xml-processor.phar
           path: xml-processor.phar
