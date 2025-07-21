@@ -18,6 +18,6 @@ class UnknownServiceException extends RuntimeException
 
     public static function fromServiceName(string $service, ?Throwable $previous = null): self
     {
-        return new self(sprintf('Unknown Goole service: "%s".', $service), $previous);
+        return new self(sprintf('Unknown Google service: "%s".', $service), $previous);
     }
 }
